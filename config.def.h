@@ -31,17 +31,15 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {"urxvt", "-name", "quick", NULL };
-const char *spcmd2[] = {"firefox", "-P", "aaaa", "--name", "whatsapp", "--no-remote", "--class", "whatsapp", "https://web.whatsapp.com", NULL };
+const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--class=whatsapp", "https://web.whatsapp.com", NULL };
 const char *spcmd3[] = {"discord", NULL };
-const char *spcmd4[] = {"firefox", "-P", "legitimuz", "--name", "legitimuz", "--no-remote", "--class", "legitimuz", "https://web.whatsapp.com", NULL };
-const char *spcmd5[] = {"slack", NULL };
+const char *spcmd4[] = {"slack", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"quick",      spcmd1},
 	{"whatsapp",      spcmd2},
 	{"discord",      spcmd3},
-	{"legitimuz",      spcmd4},
-	{"slack",      spcmd5},
+	{"slack",      spcmd4},
 };
 
 static const Rule rules[] = {
@@ -50,19 +48,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "firefox_firefox", NULL, NULL,       1 ,          0,          0 },
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
+	{ "firefox_firefox",       NULL,    NULL,        1 << 3,          0,          0 },
 	{ "zen", NULL, NULL,       1 << 2,          0,          0 },
-	{ "virt-manager", NULL, NULL,       1 << 3,          0,          0 },
-	{ "com-azefsw-audioconnect-desktop-app-mainKt", NULL, NULL,       1 << 3,          0,          0 },
-	{ "Thunar", NULL, NULL,       1 << 3,          0,          0 },
-	{ "btop", NULL, NULL,       1 << 3,          0,          0 },
+	{ "Virt-manager", NULL, NULL,       1 << 4,          0,          0 },
+	{ "com-azefsw-audioconnect-desktop-app-MainKt", "com-azefsw-audioconnect-desktop-app-MainKt", NULL,       1 << 4,          0,          0 },
+	{ "Thunar", NULL, NULL,       1 << 4,          0,          0 },
+	{ NULL, "btop", NULL,       1 << 4,          0,          0 },
 
 	{ NULL,	      "quick",    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
 	{ NULL,	    "discord",	  NULL,	     SPTAG(2),		1,	   -1 },
-	{ "legitimuz",	 NULL,	  NULL,	     SPTAG(3),		1,	   -1 },
-	{ NULL,	      "slack",	  NULL,	     SPTAG(4),		1,	   -1 },
+	{ NULL,	      "slack",	  NULL,	     SPTAG(3),		1,	   -1 },
 };
 
 /* layout(s) */
@@ -119,8 +116,7 @@ static const Key keys[] = {
 	{ MODKEY,            			XK_q,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_w,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
-	{ MODKEY,            			XK_e,  	   togglescratch,  {.ui = 3 } },
-	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 4 } },
+	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_m,      togglebar,      {0} },
 	{ MODKEY,                       XK_Right,      focusstack,     {.i = +1 } },
