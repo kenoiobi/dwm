@@ -96,9 +96,9 @@ static const char *termcmd[]  = { "urxvt", NULL };
 static const char *print1[]  = { "/home/kayon/git/dwm/printarea.sh", NULL };
 static const char *print2[]  = { "/home/kayon/git/dwm/printwhole.sh", NULL };
 
-static const char *upvol[]      = { "/usr/bin/wpctl",   "set-volume", "@DEFAULT_AUDIO_SINK@",      "5%+",      NULL };
-static const char *downvol[]    = { "/usr/bin/wpctl",   "set-volume", "@DEFAULT_AUDIO_SINK@",      "5%-",      NULL };
-static const char *mutevol[]    = { "/usr/bin/wpctl",   "set-mute",   "@DEFAULT_AUDIO_SINK@",      "toggle",   NULL };
+static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "+5%",      NULL };
+static const char *downvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "-5%",      NULL };
+static const char *mutevol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "toggle",      NULL };
 static const char *play[]    = { "playerctl", "play-pause", NULL };
 
 static const Key keys[] = {
@@ -118,6 +118,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,             XK_Return, zoom,          {0} },
 	{ MODKEY,                       XK_m,      togglebar,      {0} },
 	{ MODKEY,                       XK_Right,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Left,      focusstack,     {.i = -1 } },
@@ -131,7 +132,6 @@ static const Key keys[] = {
 	{ MODKEY,             XK_Escape,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
