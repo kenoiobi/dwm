@@ -10,7 +10,7 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
 static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
-static const char *altbarclass      = "Polybar"; /* Alternate bar class name */
+static const char *altbarclass      = "lxqt-panel"; /* Alternate bar class name */
 static const char *alttrayname      = "tray";    /* Polybar tray instance name */
 static const char *altbarcmd        = "$HOME/git/dwm/bar.sh"; /* Alternate bar launch command */
 static const char *fonts[]          = { "monospace:size=14" };
@@ -67,7 +67,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.48; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
