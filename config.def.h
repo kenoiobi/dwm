@@ -97,6 +97,8 @@ static const char *roficmd[] = { "rofi", "-show", "run", "-show-icons", NULL };
 static const char *aroficmd[] = { "rofi", "-show", "window", "-show-icons", NULL };
 static const char *termcmd[]  = { "urxvt", NULL };
 
+static const char *thunar[]  = { "wmctrl", "-a", "thunar", NULL };
+
 static const char *print1[]  = { "/home/kayon/git/dwm/printarea.sh", NULL };
 static const char *print2[]  = { "/home/kayon/git/dwm/printwhole.sh", NULL };
 
@@ -120,6 +122,7 @@ static const Key keys[] = {
 	{ MODKEY,            			XK_q,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_w,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
+	{ MODKEY,         	        XK_e,  	   spawn,  {.v = thunar } },
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,             XK_Return, zoom,          {0} },
