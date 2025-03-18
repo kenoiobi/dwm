@@ -125,7 +125,7 @@ static const Key keys[] = {
 	{ MODKEY,         	        XK_e,  	   spawn,  {.v = thunar } },
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,             XK_Return, zoom,          {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,          {0} },
 	{ MODKEY,                       XK_m,      togglebar,      {0} },
 	{ MODKEY,                       XK_Right,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Left,      focusstack,     {.i = -1 } },
