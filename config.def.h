@@ -99,8 +99,8 @@ static const char *termcmd[]  = { "urxvt", NULL };
 
 static const char *thunar[]  = { "wmctrl", "-a", "thunar", NULL };
 
-static const char *print1[]  = { "/home/kayon/git/dwm/printarea.sh", NULL };
-static const char *print2[]  = { "/home/kayon/git/dwm/printwhole.sh", NULL };
+static const char *printwhole[]  = { "flameshot","full", "-c", NULL };
+static const char *printarea[]  = { "flameshot", "gui", NULL };
 
 static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "+5%",      NULL };
 static const char *downvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "-5%",      NULL };
@@ -109,8 +109,8 @@ static const char *play[]    = { "playerctl", "play-pause", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0,                       XK_Print,      spawn,          {.v = print1 } },
-	{ 0|ShiftMask,                       XK_Print,      spawn,          {.v = print2 } },
+	{ 0,                       XK_Print,      spawn,          {.v = printwhole } },
+	{ 0|ShiftMask,                       XK_Print,      spawn,          {.v = printarea } },
 
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
 	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },

@@ -6,8 +6,8 @@ My dwm config
 main workflow:
 
 auto start some applications\
-throw them into ws4\
-access main apps on ws1, ws2 and ws3\
+throw them into ws5\
+access main apps on ws1-ws4\
 access side apps with mod a (rofi show window)\
 heavy use of monocle
 
@@ -18,5 +18,7 @@ scratchpads not transparent (fu picom)\
 bar on bottom\
 mod arrowkeys to change between apps\
 printscreen and mediakeys work
+lxqt panel\
+pcmanfm-qt desktop\
 
 ![dwm](https://github.com/kenoiobi/dwm/blob/main/dwm.jpeg)
