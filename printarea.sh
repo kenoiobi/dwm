@@ -1,1 +1,1 @@
-scrot -s -e 'xclip -selection clipboard -t image/png -i $f'
+flameshot gui -r | xclip -selection clipboard -t image/png

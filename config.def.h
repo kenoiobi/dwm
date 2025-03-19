@@ -118,6 +118,7 @@ static const Key keys[] = {
 	{ 0,                       XF86XK_AudioPlay, spawn, {.v = play   } },
 
 	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
+	{ MODKEY|ShiftMask,                       XK_d,      view,          {.ui = 1 << 8 } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
 	{ MODKEY,            			XK_q,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_w,  	   togglescratch,  {.ui = 1 } },
