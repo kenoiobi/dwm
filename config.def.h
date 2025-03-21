@@ -53,12 +53,12 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
-	{ "firefox_firefox",       NULL,    NULL,        1 << 3,          0,          0 },
 	{ "zen", NULL, NULL,       1 << 2,          0,          0 },
 	{ "Virt-manager", NULL, NULL,       1 << 4,          0,          0 },
 	{ "com-azefsw-audioconnect-desktop-app-MainKt", "com-azefsw-audioconnect-desktop-app-MainKt", NULL,       1 << 4,          0,          0 },
 	{ "Thunar", NULL, NULL,       1 << 4,          0,          0 },
 	{ NULL, "btop", NULL,       1 << 4,          0,          0 },
+	{ "KeePassXC", NULL, NULL,       1 << 4,          0,          0 },
 
 	{ NULL,	      "quick",    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
