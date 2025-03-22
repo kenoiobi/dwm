@@ -18,10 +18,7 @@ scratchpads not transparent (fu picom)\
 bar on bottom\
 mod arrowkeys to change between apps\
 printscreen and mediakeys work
-
-tooling:
-thunar\
-xfdesktop\
-lxqt-panel\
+lxqt panel\
+pcmanfm-qt desktop
 
 ![dwm](https://github.com/kenoiobi/dwm/blob/main/dwm.jpeg)

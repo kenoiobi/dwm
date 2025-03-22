@@ -150,6 +150,10 @@ typedef struct {
 	int monitor;
 } Rule;
 
+
+int alttag[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+int curtag = 1;
+
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -249,6 +253,7 @@ static void updatestatus(void);
 static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
+static void setalttag(const Arg* arg);
 static void view(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
@@ -2368,9 +2373,44 @@ updatewmhints(Client *c)
 	}
 }
 
+void setalttag(const Arg* arg){
+  int tagtoset = alttag[curtag];
+  if(tagtoset == 2){
+    tagtoset = 0;
+    alttag[curtag] = tagtoset;
+  }
+  else{
+    tagtoset++;
+    alttag[curtag] = tagtoset;
+  }
+
+
+
+/*   Arg* arga; */
+/*   arga->ui = curtag; */
+/*   view(arga); */
+
+	  if(alttag[curtag]){
+	    int shift = 0;
+	    for(int i = 0; i < alttag[curtag]; i++) shift += 9;
+	    selmon->tagset[selmon->seltags] = (arg->ui << shift) & TAGMASK;
+
+	  } else{
+		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+	  }
+
+	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
+		togglebar(NULL);
+
+	focus(NULL);
+	arrange(selmon);
+	updatecurrentdesktop();
+}
+
 void
 view(const Arg *arg)
 {
+  curtag = arg->ui;
 	int i;
 	unsigned int tmptag;
 
@@ -2378,7 +2418,14 @@ view(const Arg *arg)
 		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
+	  if(alttag[curtag]){
+	    int shift = 0;
+	    for(int i = 0; i < alttag[curtag]; i++) shift += 9;
+	    selmon->tagset[selmon->seltags] = (arg->ui << shift) & TAGMASK;
+
+	  } else{
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+	  }
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 
 		if (arg->ui == ~0)
@@ -2507,9 +2554,19 @@ zoom(const Arg *arg)
 	pop(c);
 }
 
+
+void clear(){
+    for(int i = 0; i <= 10; i++) printf("\n");
+}
+
 int
 main(int argc, char *argv[])
 {
+
+  clear();
+  printf("%lu\n", NUMTAGS);
+  clear();
+
 	if (argc == 2 && !strcmp("-v", argv[1]))
 		die("dwm-"VERSION);
 	else if (argc != 1)
@@ -2518,6 +2575,8 @@ main(int argc, char *argv[])
 		fputs("warning: no locale support\n", stderr);
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("dwm: cannot open display");
+
+	
 	checkotherwm();
 	setup();
 #ifdef __OpenBSD__
