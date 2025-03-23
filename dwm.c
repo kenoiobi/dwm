@@ -253,6 +253,7 @@ static void updatestatus(void);
 static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
+static void swapalttag(const Arg* arg);
 static void setalttag(const Arg* arg);
 static void view(const Arg *arg);
 static Client *wintoclient(Window w);
@@ -1893,11 +1894,19 @@ spawnbar()
 void
 tag(const Arg *arg)
 {
-	if (selmon->sel && arg->ui & TAGMASK) {
-		selmon->sel->tags = arg->ui & TAGMASK;
-		focus(NULL);
-		arrange(selmon);
-	}
+  if (selmon->sel && arg->ui & TAGMASK) {
+    if(alttag[arg->ui]){
+      int shift = 0;
+      for(int i = 0; i < alttag[arg->ui]; i++) shift += 9;
+      selmon->sel->tags = (arg->ui << shift) & TAGMASK;
+      focus(NULL);
+      arrange(selmon);
+    } else{
+      selmon->sel->tags = arg->ui & TAGMASK;
+      focus(NULL);
+      arrange(selmon);
+    }
+  }
 }
 
 void
@@ -2373,9 +2382,23 @@ updatewmhints(Client *c)
 	}
 }
 
+void swapalttag(const Arg* arg){
+    if(!alttag[curtag]){
+      selmon->sel->tags = (curtag << 9) & TAGMASK;
+      focus(NULL);
+      arrange(selmon);
+    }
+    if(alttag[curtag] > 0){
+      selmon->sel->tags = (curtag) & TAGMASK;
+      focus(NULL);
+      arrange(selmon);
+    }
+  
+}
+
 void setalttag(const Arg* arg){
   int tagtoset = alttag[curtag];
-  if(tagtoset == 2){
+  if(tagtoset == 1){
     tagtoset = 0;
     alttag[curtag] = tagtoset;
   }
@@ -2393,10 +2416,10 @@ void setalttag(const Arg* arg){
 	  if(alttag[curtag]){
 	    int shift = 0;
 	    for(int i = 0; i < alttag[curtag]; i++) shift += 9;
-	    selmon->tagset[selmon->seltags] = (arg->ui << shift) & TAGMASK;
+	    selmon->tagset[selmon->seltags] = (curtag << shift) & TAGMASK;
 
 	  } else{
-		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
+		selmon->tagset[selmon->seltags] = curtag & TAGMASK;
 	  }
 
 	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])

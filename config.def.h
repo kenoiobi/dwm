@@ -30,7 +30,7 @@ static const char *colors[][3]      = {
 /* tagging */
 char *tags[] = {
   "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9",
-  "11", "21", "31", "41", "51", "61", "71", "81", "91"
+  "11", "21", "31", "41", "51", "61", "71", "81", "91",
   "12", "22", "32", "42", "52", "62", "72", "82", "92"
 };
 
@@ -90,6 +90,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -156,6 +157,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
 	{ Mod4Mask,             XK_Tab, setalttag,         {.i = +1 } },
+	{ MODKEY|ShiftMask,                       XK_Tab,    swapalttag,           {0} },
 
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
