@@ -1,5 +1,13 @@
 /* See LICENSE file for copyright and license details. */
 
+/* alt-tab configuration */
+static const unsigned int tabModKey 		= 0x40;	/* if this key is hold the alt-tab functionality stays acitve. This key must be the same as key that is used to active functin altTabStart `*/
+static const unsigned int tabCycleKey 		= 0x17;	/* if this key is hit the alt-tab program moves one position forward in clients stack. This key must be the same as key that is used to active functin altTabStart */
+static const unsigned int tabPosY 			= 1;	/* tab position on Y axis, 0 = bottom, 1 = center, 2 = top */
+static const unsigned int tabPosX 			= 1;	/* tab position on X axis, 0 = left, 1 = center, 2 = right */
+static const unsigned int maxWTab 			= 600;	/* tab menu width */
+static const unsigned int maxHTab 			= 200;	/* tab menu height */
+
 /* appearance */
 
 #include <X11/XF86keysym.h>
@@ -111,6 +119,7 @@ static const char *downvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@D
 static const char *mutevol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "toggle",      NULL };
 static const char *play[]    = { "playerctl", "play-pause", NULL };
 
+#include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ 0,                       XK_Print,      spawn,          {.v = printwhole } },
@@ -124,23 +133,30 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,                       XK_d,      view,          {.ui = 1 << 8 } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
+
 	{ MODKEY,            			XK_q,  	   togglescratch,  {.ui = 0 } },
 	{ MODKEY,            			XK_w,  	   togglescratch,  {.ui = 1 } },
 	{ MODKEY|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
 	{ MODKEY,         	        XK_e,  	   spawn,  {.v = thunar } },
 	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
+
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,          {0} },
 	{ MODKEY,                       XK_m,      togglebar,      {0} },
+
 	{ MODKEY,                       XK_Right,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Left,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_Down,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Up,      focusstack,     {.i = -1 } },
+
 	{ MODKEY,                       XK_apostrophe,      cyclelayout,     {.i = +1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+
+	{ MODKEY,                       XK_z,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_x,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_c,      incnmaster,       {.i = +1} },
+
 	{ MODKEY|ShiftMask,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ Mod4Mask,                       XK_Tab,    view,           {0} },
 	{ MODKEY,             XK_Escape,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
@@ -154,6 +170,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ Mod1Mask,             		XK_Tab,    altTabStart,	   {0} },
+	{ Mod1Mask|ShiftMask,             		XK_Tab,    movestack,	   {+1} },
 
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
