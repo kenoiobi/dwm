@@ -150,10 +150,6 @@ typedef struct {
 	int monitor;
 } Rule;
 
-
-int alttag[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-int curtag = 1;
-
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -253,8 +249,6 @@ static void updatestatus(void);
 static void updatetitle(Client *c);
 static void updatewindowtype(Client *c);
 static void updatewmhints(Client *c);
-static void swapalttag(const Arg* arg);
-static void setalttag(const Arg* arg);
 static void view(const Arg *arg);
 static Client *wintoclient(Window w);
 static Monitor *wintomon(Window w);
@@ -1894,19 +1888,11 @@ spawnbar()
 void
 tag(const Arg *arg)
 {
-  if (selmon->sel && arg->ui & TAGMASK) {
-    if(alttag[arg->ui]){
-      int shift = 0;
-      for(int i = 0; i < alttag[arg->ui]; i++) shift += 9;
-      selmon->sel->tags = (arg->ui << shift) & TAGMASK;
-      focus(NULL);
-      arrange(selmon);
-    } else{
-      selmon->sel->tags = arg->ui & TAGMASK;
-      focus(NULL);
-      arrange(selmon);
-    }
-  }
+	if (selmon->sel && arg->ui & TAGMASK) {
+		selmon->sel->tags = arg->ui & TAGMASK;
+		focus(NULL);
+		arrange(selmon);
+	}
 }
 
 void
@@ -2382,58 +2368,9 @@ updatewmhints(Client *c)
 	}
 }
 
-void swapalttag(const Arg* arg){
-    if(!alttag[curtag]){
-      selmon->sel->tags = (curtag << 9) & TAGMASK;
-      focus(NULL);
-      arrange(selmon);
-    }
-    if(alttag[curtag] > 0){
-      selmon->sel->tags = (curtag) & TAGMASK;
-      focus(NULL);
-      arrange(selmon);
-    }
-  
-}
-
-void setalttag(const Arg* arg){
-  int tagtoset = alttag[curtag];
-  if(tagtoset == 1){
-    tagtoset = 0;
-    alttag[curtag] = tagtoset;
-  }
-  else{
-    tagtoset++;
-    alttag[curtag] = tagtoset;
-  }
-
-
-
-/*   Arg* arga; */
-/*   arga->ui = curtag; */
-/*   view(arga); */
-
-	  if(alttag[curtag]){
-	    int shift = 0;
-	    for(int i = 0; i < alttag[curtag]; i++) shift += 9;
-	    selmon->tagset[selmon->seltags] = (curtag << shift) & TAGMASK;
-
-	  } else{
-		selmon->tagset[selmon->seltags] = curtag & TAGMASK;
-	  }
-
-	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
-		togglebar(NULL);
-
-	focus(NULL);
-	arrange(selmon);
-	updatecurrentdesktop();
-}
-
 void
 view(const Arg *arg)
 {
-  curtag = arg->ui;
 	int i;
 	unsigned int tmptag;
 
@@ -2441,14 +2378,7 @@ view(const Arg *arg)
 		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
-	  if(alttag[curtag]){
-	    int shift = 0;
-	    for(int i = 0; i < alttag[curtag]; i++) shift += 9;
-	    selmon->tagset[selmon->seltags] = (arg->ui << shift) & TAGMASK;
-
-	  } else{
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
-	  }
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 
 		if (arg->ui == ~0)
@@ -2577,19 +2507,9 @@ zoom(const Arg *arg)
 	pop(c);
 }
 
-
-void clear(){
-    for(int i = 0; i <= 10; i++) printf("\n");
-}
-
 int
 main(int argc, char *argv[])
 {
-
-  clear();
-  printf("%lu\n", NUMTAGS);
-  clear();
-
 	if (argc == 2 && !strcmp("-v", argv[1]))
 		die("dwm-"VERSION);
 	else if (argc != 1)
@@ -2598,8 +2518,6 @@ main(int argc, char *argv[])
 		fputs("warning: no locale support\n", stderr);
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("dwm: cannot open display");
-
-	
 	checkotherwm();
 	setup();
 #ifdef __OpenBSD__

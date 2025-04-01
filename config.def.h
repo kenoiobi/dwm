@@ -30,8 +30,7 @@ static const char *colors[][3]      = {
 /* tagging */
 char *tags[] = {
   "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9",
-  "11", "21", "31", "41", "51", "61", "71", "81", "91",
-  "12", "22", "32", "42", "52", "62", "72", "82", "92"
+  "10", "11", "12", "13"
 };
 
 typedef struct {
@@ -156,9 +155,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
-	{ Mod4Mask,             XK_Tab, setalttag,         {.i = +1 } },
-	{ MODKEY|ShiftMask,                       XK_Tab,    swapalttag,           {0} },
-
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -168,6 +164,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_F1,                      9)
+	TAGKEYS(                        XK_F2,                      10)
+	TAGKEYS(                        XK_F3,                      11)
+	TAGKEYS(                        XK_F4,                      12)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
