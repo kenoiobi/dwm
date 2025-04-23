@@ -45,7 +45,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"urxvt", "-name", "quick", NULL };
+const char *spcmd1[] = {"urxvt", "-name", "quick", "-e", "tmux", NULL };
 const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--class=whatsapp", "https://web.whatsapp.com", NULL };
 const char *spcmd3[] = {"discord", NULL };
 const char *spcmd4[] = {"slack", NULL };
@@ -91,11 +91,17 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
+/* #define TAGKEYS(KEY,TAG) \ */
+/* 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \ */
+/* 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \ */
+/* 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \ */
+/* 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, */
+
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      tag,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 
@@ -131,14 +137,13 @@ static const Key keys[] = {
 	{ 0,                       XF86XK_AudioPlay, spawn, {.v = play   } },
 
 	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
-	{ MODKEY|ShiftMask,                       XK_d,      view,          {.ui = 1 << 8 } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
 
-	{ MODKEY,            			XK_q,  	   togglescratch,  {.ui = 0 } },
-	{ MODKEY,            			XK_w,  	   togglescratch,  {.ui = 1 } },
-	{ MODKEY|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
-	{ MODKEY,         	        XK_e,  	   spawn,  {.v = thunar } },
-	{ MODKEY,            			XK_s,  	   togglescratch,  {.ui = 3 } },
+	{ Mod1Mask,            			XK_q,  	   togglescratch,  {.ui = 0 } },
+	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
+	{ Mod1Mask|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
+	{ Mod1Mask,         	        XK_e,  	   spawn,  {.v = thunar } },
+	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 
 	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,          {0} },
@@ -173,19 +178,16 @@ static const Key keys[] = {
 	{ Mod1Mask,             		XK_Tab,    altTabStart,	   {0} },
 	{ Mod1Mask|ShiftMask,             		XK_Tab,    movestack,	   {+1} },
 
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
-	TAGKEYS(                        XK_F1,                      9)
-	TAGKEYS(                        XK_F2,                      10)
-	TAGKEYS(                        XK_F3,                      11)
-	TAGKEYS(                        XK_F4,                      12)
+	TAGKEYS(                        XK_q,                      0)
+	TAGKEYS(                        XK_w,                      1)
+	TAGKEYS(                        XK_e,                      2)
+	TAGKEYS(                        XK_r,                      3)
+	TAGKEYS(                        XK_t,                      4)
+	TAGKEYS(                        XK_1,                      5)
+	TAGKEYS(                        XK_2,                      6)
+	TAGKEYS(                        XK_3,                      7)
+	TAGKEYS(                        XK_4,                      8)
+	TAGKEYS(                        XK_5,                      9)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
