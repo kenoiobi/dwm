@@ -45,7 +45,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"urxvt", "-name", "quick", "-e", "tmux", NULL };
+const char *spcmd1[] = {"st", "-c", "quick", "-e", "tmux", NULL };
 const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--class=whatsapp", "https://web.whatsapp.com", NULL };
 const char *spcmd3[] = {"discord", NULL };
 const char *spcmd4[] = {"slack", NULL };
@@ -71,7 +71,7 @@ static const Rule rules[] = {
 	{ NULL, "btop", NULL,       1 << 4,          0,          0 },
 	{ "KeePassXC", NULL, NULL,       1 << 4,          0,          0 },
 
-	{ NULL,	      "quick",    NULL,      SPTAG(0),		1,	   -1 },
+	{ "quick",	      NULL,    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
 	{ NULL,	    "discord",	  NULL,	     SPTAG(2),		1,	   -1 },
 	{ NULL,	      "slack",	  NULL,	     SPTAG(3),		1,	   -1 },
@@ -113,7 +113,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "run", "-show-icons", NULL };
 static const char *aroficmd[] = { "rofi", "-show", "window", "-show-icons", NULL };
-static const char *termcmd[]  = { "urxvt", NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 static const char *thunar[]  = { "wmctrl", "-a", "thunar", NULL };
 
@@ -188,7 +188,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_3,                      7)
 	TAGKEYS(                        XK_4,                      8)
 	TAGKEYS(                        XK_5,                      9)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
