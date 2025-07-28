@@ -17,10 +17,6 @@ static const unsigned int gappx     = 30;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
-static const int usealtbar          = 1;        /* 1 means use non-dwm status bar */
-static const char *altbarclass      = "lxqt-panel"; /* Alternate bar class name */
-static const char *alttrayname      = "tray";    /* Polybar tray instance name */
-static const char *altbarcmd        = "$HOME/git/dwm/bar.sh"; /* Alternate bar launch command */
 static const char *fonts[]          = { "monospace:size=14" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
@@ -37,24 +33,25 @@ static const char *colors[][3]      = {
 
 /* tagging */
 char *tags[] = {
-  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9",
-  "10", "11", "12", "13"
+  "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9", "10"
 };
 
 typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-c", "quick", "-e", "tmux", NULL };
-const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--class=whatsapp", "https://web.whatsapp.com", NULL };
+const char *spcmd1[] = {"alacritty", "--class", "quick", "-e", "tmux", NULL };
+const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--app=https://web.whatsapp.com", "--class=whatsapp", NULL };
 const char *spcmd3[] = {"discord", NULL };
 const char *spcmd4[] = {"slack", NULL };
+const char *spcmd5[] = {"dolphin", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"quick",      spcmd1},
 	{"whatsapp",      spcmd2},
 	{"discord",      spcmd3},
 	{"slack",      spcmd4},
+	{"dolphin",      spcmd5},
 };
 
 static const Rule rules[] = {
@@ -64,17 +61,12 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
-	{ "zen", NULL, NULL,       1 << 2,          0,          0 },
-	{ "Virt-manager", NULL, NULL,       1 << 4,          0,          0 },
-	{ "com-azefsw-audioconnect-desktop-app-MainKt", "com-azefsw-audioconnect-desktop-app-MainKt", NULL,       1 << 4,          0,          0 },
-	{ "Thunar", NULL, NULL,       1 << 4,          0,          0 },
-	{ NULL, "btop", NULL,       1 << 4,          0,          0 },
-	{ "KeePassXC", NULL, NULL,       1 << 4,          0,          0 },
 
 	{ "quick",	      NULL,    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
 	{ NULL,	    "discord",	  NULL,	     SPTAG(2),		1,	   -1 },
 	{ NULL,	      "slack",	  NULL,	     SPTAG(3),		1,	   -1 },
+	{ NULL,	      "dolphin",	  NULL,	     SPTAG(4),		1,	   -1 },
 };
 
 /* layout(s) */
@@ -84,8 +76,8 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
-	{ "[]=",      tile },    /* first entry is default */
 	{ "[M]",      monocle },
+	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL, NULL},
 };
@@ -113,71 +105,98 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "run", "-show-icons", NULL };
 static const char *aroficmd[] = { "rofi", "-show", "window", "-show-icons", NULL };
-static const char *termcmd[]  = { "st", NULL };
-
-static const char *thunar[]  = { "wmctrl", "-a", "thunar", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 
 static const char *printwhole[]  = { "flameshot","full", "-c", NULL };
 static const char *printarea[]  = { "flameshot", "gui", NULL };
 
-static const char *upvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "+5%",      NULL };
-static const char *downvol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "-5%",      NULL };
+static const char *upvol[]      = { "wpctl",   "set-volume", "@DEFAULT_SINK@",      ".05+",      NULL };
+static const char *downvol[]      = { "wpctl",   "set-volume", "@DEFAULT_SINK@",      ".05-",      NULL };
 static const char *mutevol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "toggle",      NULL };
 static const char *play[]    = { "playerctl", "play-pause", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0,                       XK_Print,      spawn,          {.v = printwhole } },
-	{ 0|ShiftMask,                       XK_Print,      spawn,          {.v = printarea } },
+	// Printing
+	{ 0,                         XK_Print,      spawn,      {.v = printwhole } },
+	{ 0|ShiftMask,               XK_Print,      spawn,      {.v = printarea  } },
 
-	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
-	{ 0,                       XF86XK_AudioPlay, spawn, {.v = play   } },
+	// Media keys
+	{ 0,               XF86XK_AudioLowerVolume, spawn,      {.v = downvol    } },
+	{ 0,               XF86XK_AudioMute,        spawn,      {.v = mutevol    } },
+	{ 0,               XF86XK_AudioRaiseVolume, spawn,      {.v = upvol      } },
+	{ 0,               XF86XK_AudioPlay,        spawn,      {.v = play       } },
 
-	{ MODKEY,                       XK_d,      spawn,          {.v = roficmd } },
-	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
-
-	{ Mod1Mask,            			XK_q,  	   togglescratch,  {.ui = 0 } },
-	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
-	{ Mod1Mask|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
-	{ Mod1Mask,         	        XK_e,  	   spawn,  {.v = thunar } },
-	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
-
-	{ MODKEY,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,          {0} },
-	{ MODKEY,                       XK_m,      togglebar,      {0} },
-
-	{ MODKEY,                       XK_Right,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_Left,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_Down,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_Up,      focusstack,     {.i = -1 } },
+	// num row
+	
 
 	{ MODKEY,                       XK_apostrophe,      cyclelayout,     {.i = +1 } },
 
+	// Close
+	{ MODKEY,             XK_Escape,      killclient,     {0} },
+
+
+	// top row
+
+
+	// Last workspace
+	{ Mod4Mask,                       XK_Tab,    view,           {0} },
+
+	// Alt tab
+	{ Mod1Mask,                     XK_Tab,    altTabStart,         {0} },
+	// switch master and stack with alt shift tab
+	{ Mod1Mask|ShiftMask,             		XK_Tab,    movestack,	   {+1} },
+
+
+	// mid row
+
+
+	// show open windows
+	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
+
+	// monitor control, focus then move
+	{ MODKEY,                       XK_s,     focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_d,     focusmon,       {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_s,      tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_d,      tagmon,         {.i = +1 } },
+
+
+	// Fullscreen and toggle float
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_f,  togglefloating, {0} },
+
+
+	// bot row
+
+	{ MODKEY,                       XK_m,      togglebar,      {0} },
+
+	// changing size of master window on master and stack
 	{ MODKEY,                       XK_z,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_x,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_c,      incnmaster,       {.i = +1} },
 
-	{ MODKEY|ShiftMask,                       XK_Return, zoom,           {0} },
-	{ Mod4Mask,                       XK_Tab,    view,           {0} },
-	{ MODKEY,             XK_Escape,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ Mod1Mask,             		XK_Tab,    altTabStart,	   {0} },
-	{ Mod1Mask|ShiftMask,             		XK_Tab,    movestack,	   {+1} },
 
+	// special/mod key row
+
+
+	// rofi
+	{ MODKEY,                       XK_Return,      spawn,          {.v = roficmd } },
+	// no clue lol
+	{ MODKEY|ShiftMask,             XK_Return, zoom,          {0} },
+
+	// terminal
+	{ MODKEY,                      XK_BackSpace, spawn,          {.v = termcmd } },
+
+
+	// Scratchpads
+	{ Mod1Mask,            			XK_q,  	   togglescratch,  {.ui = 0 } },
+	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
+	{ Mod1Mask|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
+	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
+	{ Mod1Mask,            			XK_e,  	   togglescratch,  {.ui = 4 } },
+
+	// workspace keys
 	TAGKEYS(                        XK_q,                      0)
 	TAGKEYS(                        XK_w,                      1)
 	TAGKEYS(                        XK_e,                      2)
