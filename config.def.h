@@ -66,6 +66,13 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
+	{ "pavucontrol",       NULL,    NULL,        1 << 5,          0,          0 },
+	{ ".blueman-manager-wrapped",       NULL,    NULL,        1 << 5,          0,          0 },
+	{ "obsidian",       NULL,    NULL,        1 << 3,          0,          0 },
+	{ "DBeaver",       NULL,    NULL,        1 << 3,          0,          0 },
+	{ "obs",       NULL,    NULL,        1 << 4,          0,          0 },
+	{ "KeePassXC",       NULL,    NULL,        1 << 4,          0,          0 },
+	{ "Vial",       NULL,    NULL,        1 << 4,          0,          0 },
 
 	{ "quick",	      NULL,    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
@@ -134,7 +141,7 @@ static const Key keys[] = {
 	{ 0,               XF86XK_AudioPlay,        spawn,      {.v = play       } },
 
 	// num row
-	
+
 
 	{ MODKEY,                       XK_apostrophe,      cyclelayout,     {.i = +1 } },
 
@@ -197,7 +204,7 @@ static const Key keys[] = {
 	// Scratchpads
 	{ Mod1Mask,            			XK_q,  	   togglescratch,  {.ui = 0 } },
 	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
-	{ Mod1Mask|ShiftMask,         	        XK_w,  	   togglescratch,  {.ui = 2 } },
+	{ Mod1Mask,         	        XK_d,  	   togglescratch,  {.ui = 2 } },
 	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
 	{ Mod1Mask,            			XK_e,  	   togglescratch,  {.ui = 4 } },
 
