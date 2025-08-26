@@ -78,7 +78,7 @@ static const Rule rules[] = {
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
 	{ NULL,	    "discord",	  NULL,	     SPTAG(2),		1,	   -1 },
 	{ NULL,	      "slack",	  NULL,	     SPTAG(3),		1,	   -1 },
-	{ NULL,	      "dolphin",	  NULL,	     SPTAG(4),		1,	   -1 },
+	/* { NULL,	      "dolphin",	  NULL,	     SPTAG(4),		1,	   -1 }, */
 };
 
 /* layout(s) */
@@ -213,7 +213,7 @@ static const Key keys[] = {
 	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
 	{ Mod1Mask,         	        XK_d,  	   togglescratch,  {.ui = 2 } },
 	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
-	{ Mod1Mask,            			XK_e,  	   togglescratch,  {.ui = 4 } },
+	/* { Mod1Mask,            			XK_e,  	   togglescratch,  {.ui = 4 } }, */
 
 	// workspace keys
 	TAGKEYS(                        XK_q,                      0)
