@@ -150,7 +150,7 @@ static const Key keys[] = {
 	// num row
 
 
-	{ MODKEY,                       XK_apostrophe,      cyclelayout,     {.i = +1 } },
+	{ MODKEY,                       XK_minus,      cyclelayout,     {.i = +1 } },
 
 	// Close
 	{ MODKEY,             XK_Escape,      killclient,     {0} },
@@ -175,15 +175,15 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_a,      spawn,          {.v = aroficmd } },
 
 	// monitor control, focus then move
-	{ MODKEY,                       XK_s,     focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_d,     focusmon,       {.i = +1 } },
-	{ MODKEY|ControlMask,           XK_s,      tagmon,         {.i = -1 } },
-	{ MODKEY|ControlMask,           XK_d,      tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_o,     focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_e,     focusmon,       {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_o,      tagmon,         {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_e,      tagmon,         {.i = +1 } },
 
 
 	// Fullscreen and toggle float
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY|ShiftMask,             XK_f,  togglefloating, {0} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_u,  togglefloating, {0} },
 
 
 	// bot row
@@ -191,9 +191,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_m,      togglebar,      {0} },
 
 	// changing size of master window on master and stack
-	{ MODKEY,                       XK_z,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_x,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_c,      incnmaster,       {.i = +1} },
+	{ MODKEY,                       XK_semicolon,      setmfact,       {.f = -0.05} },
+	{ MODKEY,                       XK_q,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_j,      incnmaster,       {.i = +1} },
 
 
 	// special/mod key row
@@ -209,18 +209,18 @@ static const Key keys[] = {
 
 
 	// Scratchpads
-	{ Mod1Mask,            			XK_q,  	   togglescratch,  {.ui = 0 } },
-	{ Mod1Mask,            			XK_w,  	   togglescratch,  {.ui = 1 } },
-	{ Mod1Mask,         	        XK_d,  	   togglescratch,  {.ui = 2 } },
-	{ Mod1Mask,            			XK_s,  	   togglescratch,  {.ui = 3 } },
+	{ Mod1Mask,            			XK_apostrophe,  	   togglescratch,  {.ui = 0 } },
+	{ Mod1Mask,            			XK_comma,  	   togglescratch,  {.ui = 1 } },
+	{ Mod1Mask,         	        XK_period,  	   togglescratch,  {.ui = 2 } },
+	{ Mod1Mask,            			XK_o,  	   togglescratch,  {.ui = 3 } },
 	/* { Mod1Mask,            			XK_e,  	   togglescratch,  {.ui = 4 } }, */
 
 	// workspace keys
-	TAGKEYS(                        XK_q,                      0)
-	TAGKEYS(                        XK_w,                      1)
-	TAGKEYS(                        XK_e,                      2)
-	TAGKEYS(                        XK_r,                      3)
-	TAGKEYS(                        XK_t,                      4)
+	TAGKEYS(                        XK_apostrophe,                      0)
+	TAGKEYS(                        XK_comma,                      1)
+	TAGKEYS(                        XK_period,                      2)
+	TAGKEYS(                        XK_p,                      3)
+	TAGKEYS(                        XK_y,                      4)
 	TAGKEYS(                        XK_1,                      5)
 	TAGKEYS(                        XK_2,                      6)
 	TAGKEYS(                        XK_3,                      7)
