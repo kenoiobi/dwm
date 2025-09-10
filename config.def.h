@@ -13,7 +13,7 @@ static const unsigned int maxHTab 			= 200;	/* tab menu height */
 #include <X11/XF86keysym.h>
 
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int gappx     = 30;        /* gaps between windows */
+static const unsigned int gappx     = 0;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
@@ -65,14 +65,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
+	{ "steam",       NULL,    NULL,        1,          0,          0 },
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
-	{ "pavucontrol",       NULL,    NULL,        1 << 5,          0,          0 },
-	{ ".blueman-manager-wrapped",       NULL,    NULL,        1 << 5,          0,          0 },
+
 	{ "obsidian",       NULL,    NULL,        1 << 3,          0,          0 },
 	{ "DBeaver",       NULL,    NULL,        1 << 3,          0,          0 },
+
 	{ "obs",       NULL,    NULL,        1 << 4,          0,          0 },
 	{ "KeePassXC",       NULL,    NULL,        1 << 4,          0,          0 },
 	{ "Vial",       NULL,    NULL,        1 << 4,          0,          0 },
+
+	{ "pavucontrol",       NULL,    NULL,        1 << 6,          0,          0 },
+	{ ".blueman-manager-wrapped",       NULL,    NULL,        1 << 6,          0,          0 },
 
 	{ "quick",	      NULL,    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
