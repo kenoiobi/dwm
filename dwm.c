@@ -2906,10 +2906,12 @@ view(const Arg *arg)
 	int i;
 	unsigned int tmptag;
 
-	selmon->seltags ^= 1; /* toggle sel tagset */
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags]){
+	    selmon->seltags ^= 1; /* toggle sel tagset */
 	  goto alt;
 	}
+
+	selmon->seltags ^= 1; /* toggle sel tagset */
 	  
 	if (arg->ui & TAGMASK) {
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
