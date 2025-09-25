@@ -2906,9 +2906,11 @@ view(const Arg *arg)
 	int i;
 	unsigned int tmptag;
 
-	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
-		return;
 	selmon->seltags ^= 1; /* toggle sel tagset */
+	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags]){
+	  goto alt;
+	}
+	  
 	if (arg->ui & TAGMASK) {
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
@@ -2920,9 +2922,10 @@ view(const Arg *arg)
 			selmon->pertag->curtag = i + 1;
 		}
 	} else {
-		tmptag = selmon->pertag->prevtag;
-		selmon->pertag->prevtag = selmon->pertag->curtag;
-		selmon->pertag->curtag = tmptag;
+	alt: 
+	  tmptag = selmon->pertag->prevtag;
+	  selmon->pertag->prevtag = selmon->pertag->curtag;
+	  selmon->pertag->curtag = tmptag;
 	}
 
 	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
