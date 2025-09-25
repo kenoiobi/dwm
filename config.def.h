@@ -133,9 +133,9 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *printwhole[]  = { "flameshot","full", "-c", NULL };
 static const char *printarea[]  = { "flameshot", "gui", NULL };
 
-static const char *upvol[]      = { "wpctl",   "set-volume", "@DEFAULT_SINK@",      ".05+",      NULL };
-static const char *downvol[]      = { "wpctl",   "set-volume", "@DEFAULT_SINK@",      ".05-",      NULL };
-static const char *mutevol[]      = { "/usr/bin/pactl",   "set-sink-volume", "@DEFAULT_SINK@",      "toggle",      NULL };
+static const char *upvol[]      = { "/usr/bin/amixer",  "set", "Master", "5%+", NULL };
+static const char *downvol[]    = { "/usr/bin/amixer",  "set", "Master", "5%-", NULL };
+static const char *mutevol[]    = { "/usr/bin/amixer", "set", "Master", "toggle", NULL};
 static const char *play[]    = { "playerctl", "play-pause", NULL };
 
 #include "movestack.c"
