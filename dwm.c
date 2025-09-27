@@ -809,7 +809,8 @@ createmon(void)
 
 		m->pertag->ltidxs[i][0] = m->lt[0];
 		m->pertag->ltidxs[i][1] = m->lt[1];
-		m->pertag->sellts[i] = m->sellt;
+		/* m->pertag->sellts[i] = m->sellt; */
+		m->pertag->sellts[i] = pretag[i];
 
 		m->pertag->showbars[i] = m->showbar;
 	}

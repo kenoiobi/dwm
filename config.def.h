@@ -66,7 +66,10 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "steam",       NULL,    NULL,        1,          0,          0 },
+
 	{ "Emacs",       NULL,    NULL,        1 << 1,          0,          0 },
+
+	{ "librewolf",       NULL,    NULL,        1 << 2,          0,          0 },
 
 	{ "obsidian",       NULL,    NULL,        1 << 3,          0,          0 },
 	{ "DBeaver",       NULL,    NULL,        1 << 3,          0,          0 },
@@ -76,7 +79,7 @@ static const Rule rules[] = {
 	{ "Vial",       NULL,    NULL,        1 << 4,          0,          0 },
 
 	{ "pavucontrol",       NULL,    NULL,        1 << 6,          0,          0 },
-	{ ".blueman-manager-wrapped",       NULL,    NULL,        1 << 6,          0,          0 },
+	{ "Blueman-manager",       NULL,    NULL,        1 << 6,          0,          0 },
 
 	{ "quick",	      NULL,    NULL,      SPTAG(0),		1,	   -1 },
 	{ "whatsapp",    NULL,	  NULL,      SPTAG(1),		1,	   -1 },
@@ -96,6 +99,22 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL, NULL},
+};
+
+// pos = workspace
+// number = layout
+int pretag[] = {
+  0, // not used
+  0, // 1
+  0, // 2
+  0, // 3
+  0, // 4
+  0, // 5
+  0, // 6
+  1, // 7
+  0, // 8
+  0, // 9
+  0, // 10
 };
 
 /* key definitions */
