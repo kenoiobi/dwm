@@ -1,26 +1,27 @@
-My dwm config
+# My dwm config
 
-9 workspaces\
-3 nested workspaces per main workspace\
-totaling 27 workspaces for each monitor\
-4 scratchpads
+- 10 workspaces
+  - Mod-q:t
+  - Mod-1:5
+- 3 scratchpads
+  - Terminal
+  - Whatsapp
+  - Slack
 
-main workflow:
+# main workflow:
 
-auto start some applications\
-throw them into ws5\
-access main apps on ws1-ws4\
-access side apps with mod a (rofi show window)\
-heavy use of monocle
+- Monocle by default
+- Auto start applications, move them with rules
+- Use scratchpads, a lot
 
 changes from default:
 
-different layouts for each tag (ty qtile)\
-scratchpads not transparent (fu picom)\
-bar on bottom\
-mod arrowkeys to change between apps\
-printscreen and mediakeys work\
-lxqt panel\
-xfdesktop
+1. Different layouts for each tag (ty qtile)
+   - Pre start the layout setup
+2. Scratchpads not transparent (fu picom)
+3. Bar on bottom
+4. Mod arrowkeys to change between apps
+5. Printscreen and mediakeys work
+6. Awesomebar
 
 ![dwm](https://github.com/kenoiobi/dwm/blob/main/dwm.jpeg)
