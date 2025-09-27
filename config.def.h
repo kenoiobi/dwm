@@ -45,7 +45,7 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"alacritty", "--class", "quick", "-e", "tmux", NULL };
+const char *spcmd1[] = {"alacritty", "--class", "quick", "-o", "font.size=14", "-e", "tmux", NULL };
 const char *spcmd2[] = {"chromium", "--user-data-dir=/home/kayon/chrome/whats", "--app=https://web.whatsapp.com", "--class=whatsapp", NULL };
 const char *spcmd3[] = {"discord", NULL };
 const char *spcmd4[] = {"slack", NULL };
