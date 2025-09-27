@@ -1,20 +1,20 @@
-# My dwm config
+# My DWM config
 
-- 10 workspaces
+- 10 Workspaces
   - Mod-q:t
   - Mod-1:5
-- 3 scratchpads
+- 3 Scratchpads
   - Terminal
   - Whatsapp
   - Slack
 
-# main workflow:
+## Main workflow
 
 - Monocle by default
 - Auto start applications, move them with rules
 - Use scratchpads, a lot
 
-changes from default:
+## Changes from default
 
 1. Different layouts for each tag (ty qtile)
    - Pre start the layout setup
